@@ -4,9 +4,19 @@ import './App.css';
 
 class App extends Component {
 
+  state = {res: ''};
+
   onFetch = () => {
     console.log('FETCH DATA');
-  }
+
+    this.setState({res: 'Fetching Data ...'})
+
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(response => response.json())
+      .then(json => {
+        this.setState({res: json[0].title})
+      })
+  };
 
   render() {
     return (
@@ -19,6 +29,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
       <button onClick={this.onFetch}> Fetch </button>
+      <div> Result: {this.state.res}</div>
       </div>
     );
   }
